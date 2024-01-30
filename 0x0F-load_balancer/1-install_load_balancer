@@ -1,4 +1,5 @@
-nstall haproxy
+#!/usr/bin/env bash
+# install haproxy
 sudo apt-get update
 sudo apt-get install -y haproxy
 echo "frontend web-front
