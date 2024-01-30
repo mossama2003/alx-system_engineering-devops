@@ -15,7 +15,7 @@ frontend  mossama2003_frontend
         bind *:80
         mode http
         default_backend mossama2003_backend
-backend besthor_backend
+backend mossama2003_backend
         balance roundrobin
         server 417671-web-01 54.152.138.146:80 check
         server 417671-web-02 52.91.133.30:80 check
