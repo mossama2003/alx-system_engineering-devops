@@ -6,48 +6,21 @@ sudo apt-get install -y nginx
 # Creating an index.html page
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-<<<<<<< HEAD
 # Performing a "moved permanently redirection" (301)
-new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/mossama2003 permanent;"
 sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
-=======
-# colors
-blue='\e[1;34m'
-brown='\e[0;33m'
-green='\e[1;32m'
-reset='\033[0m'
-
-echo -e "${blue}Updating and doing some minor checks...${reset}\n"
->>>>>>> 48536dad2a29c6f8d91330affa50cd9d5cf87e3e
 
 # Creating a 404 Custom error page
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 
-<<<<<<< HEAD
 sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
-=======
-	#shellcheck disable=SC2181
-	if [ $? -ne 0 ]; then
-		echo -e "	Installing: ${brown}$1${reset}\n"
-		sudo apt-get update -y -qq && \
-			sudo apt-get install -y "$1" -qq
-		echo -e "\n"
-	else
-		echo -e "	${green}${1} is already installed.${reset}\n"
-	fi
-}
->>>>>>> 48536dad2a29c6f8d91330affa50cd9d5cf87e3e
 
 # Creating an HTTP response header
 sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
 
-<<<<<<< HEAD
 # Testing configurations for syntax errors
 sudo nginx -t
-=======
-echo -e "\n${blue}Setting up some minor stuff.${reset}\n"
->>>>>>> 48536dad2a29c6f8d91330affa50cd9d5cf87e3e
 
 # Restart nginx after implementing changes
 sudo service nginx restart
