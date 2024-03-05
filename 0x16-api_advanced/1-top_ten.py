@@ -1,37 +1,19 @@
 #!/usr/bin/python3
-"""
-Script to print hot posts on a given Reddit subreddit.
-"""
-
+"""use reddit api to print the number the titles of
+the first 10 hot posts listed for a given subreddit."""
 import requests
 
 
 def top_ten(subreddit):
-    """Print the titles of the 10 hottest posts on a given subreddit."""
-    # Construct the URL for the subreddit's hot posts in JSON format
-    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-
-    # Define headers for the HTTP request, including User-Agent
-    headers = {
-        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
-    }
-
-    # Define parameters for the request, limiting the number of posts to 10
-    params = {
-        "limit": 10
-    }
-
-    # Send a GET request to the subreddit's hot posts page
-    response = requests.get(url, headers=headers, params=params,
-                            allow_redirects=False)
-
-    # Check if the response status code indicates a not-found error (404)
-    if response.status_code == 404:
+    """Reddit API endpoint for subreddit information"""
+    url = f'https://www.reddit.com/r/{subreddit}/hot.json?limit=10'
+    headers = {'User-Agent': 'your_user_agent'}
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 200:
+        data = response.json()
+        if 'data' in data and 'children' in data['data']:
+            for idx, post in enumerate(data['data']['children'][:10], start=1):
+                title = post['data']['title']
+                print(f"{idx}. {title}")
+    elif response.status_code == 404:
         print("None")
-        return
-
-    # Parse the JSON response and extract the 'data' section
-    results = response.json().get("data")
-
-    # Print the titles of the top 10 hottest posts
-    [print(c.get("data").get("title")) for c in results.get("children")]
